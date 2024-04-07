@@ -36,10 +36,17 @@ public class LandingPageTest {
     }
 
     @Test
-    public void contentLoads() {
-        page.navigate("localhost:8080/");
-        Locator pageBody = page.locator("body");
-        assertThat(pageBody).containsText("Welcome to The login page");
+    public void signupWorks() {
+        String email = "test@example.com";
+        String password = "Password123!";
+
+        page.navigate("http://localhost:8080/users/signup");
+
+        page.fill("#emailInput", email);
+        page.fill("#passwordInput", password);
+        page.click("#signupButton");
+
+        assertThat(page).textContent("#successMessage").contains("User signed up successfully");
 
     }
 }
