@@ -1,17 +1,38 @@
 package com.makers.moneytree;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.makers.moneytree.controller.UserController;
+import com.makers.moneytree.model.User;
+import com.makers.moneytree.services.UserService;
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.microsoft.playwright.*;
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
 
 
-
+@SpringBootTest
+@AutoConfigureMockMvc
 public class LandingPageTest {
     static Playwright playwright;
     static Browser browser;
     BrowserContext context;
     Page page;
+
+    @Configuration
+    public static class AppConfig {
+        @Bean
+        public User user() {
+            return new User();
+        }
+    }
 
     @BeforeAll
     static void launchBrowser(){
@@ -35,18 +56,29 @@ public class LandingPageTest {
         context.close();
     }
 
+    @MockBean
+    private UserService userService;
+
+    @MockBean
+    private UserController controller;
+
     @Test
-    public void signupWorks() {
-        String email = "test@example.com";
-        String password = "Password123!";
+    public void signupReturnsSuccess(){
 
-        page.navigate("http://localhost:8080/users/signup");
+        final HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 
-        page.fill("#emailInput", email);
-        page.fill("#passwordInput", password);
-        page.click("#signupButton");
+        String userJson = "{\"name\": \"username\", \"email\": \"example@email.com\", \"password\": \"password\"}";
 
-        assertThat(page).textContent("#successMessage").contains("User signed up successfully");
+        RestTemplate restTemplate = new RestTemplate();
+        final ResponseEntity<String> response = restTemplate.postForEntity(
+                "http://localhost:8080/users/signup",
+                new HttpEntity<>(userJson, headers),
+                String.class
+        );
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isEqualTo("Email already exists");
 
     }
 }
