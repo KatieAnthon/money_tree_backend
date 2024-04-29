@@ -1,30 +1,26 @@
 package com.makers.moneytree.model.SpendAnalysis;
 
 
-import lombok.Builder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.Date;
 import java.util.Map;
-
-@Builder
 public class SpendAnalysis {
+    String id;
+    String userid;
+    Date date;
+    String name;
+    Integer amount;
+    String currency;
+    Map<String, Integer> categories;
 
-    private String id;
-
-    private String userid;
-
-    private Date date;
-
-    private String name;
-
-    private Integer amount;
-
-    private String currency;
-
-    private Map<String, Integer> categories;
-
+    public SpendAnalysis(String id, String userid, Date date, String name, Integer amount, String currency, Map<String, Integer> categories) {
+        this.id = id;
+        this.userid = userid;
+        this.date = date;
+        this.name = name;
+        this.amount = amount;
+        this.currency = currency;
+        this.categories = categories;
+    }
     public String getId() {
         return id;
     }
@@ -41,6 +37,38 @@ public class SpendAnalysis {
         this.userid = userid;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     public Map<String, Integer> getCategories() {
         return categories;
     }
@@ -49,4 +77,3 @@ public class SpendAnalysis {
         this.categories = categories;
     }
 }
-

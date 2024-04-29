@@ -5,19 +5,24 @@ import com.makers.moneytree.repository.SpendAnalysis.SpendAnalysisRepository;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class SpendUploadService {
 
     private final SpendAnalysisRepository repository;
+
+    public SpendUploadService() {
+        repository = null;
+    }
 
     public Integer addSpendFile(MultipartFile file) throws IOException {
         Set<SpendAnalysis> spendAnalysis = parseCSV(file);
@@ -40,14 +45,17 @@ public class SpendUploadService {
 
             return csvToBean.parse()
                     .stream()
-                    .map(csvLine -> SpendAnalysis.builder()
-                            .date(csvLine.getDate())
-                            .name(csvLine.getName())
-                            .amount(csvLine.getAmount())
-                            .currency(csvLine.getCurrency())
-                            .build()
-                    )
+                    .map(csvLine -> new SpendAnalysis(
+                            null,
+                            null,
+                            csvLine.getDate(),
+                            csvLine.getName(),
+                            csvLine.getAmount(),
+                            csvLine.getCurrency(),
+                            null
+                    ))
                     .collect(Collectors.toSet());
+
         }
 
     }
