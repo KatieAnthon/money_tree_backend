@@ -12,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,8 +22,8 @@ public class SpendUploadService {
 
     private final SpendAnalysisRepository repository;
 
-    public SpendUploadService() {
-        repository = null;
+    public SpendUploadService(SpendAnalysisRepository repository) {
+        this.repository = repository;
     }
 
     public Integer addSpendFile(MultipartFile file) throws IOException {
@@ -29,6 +31,7 @@ public class SpendUploadService {
         repository.saveAll(spendAnalysis);
         return spendAnalysis.size();
     }
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private Set<SpendAnalysis> parseCSV(MultipartFile file) throws IOException {
         try(Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
@@ -45,15 +48,19 @@ public class SpendUploadService {
 
             return csvToBean.parse()
                     .stream()
-                    .map(csvLine -> new SpendAnalysis(
+                    .map(csvLine -> {
+                            LocalDate date = LocalDate.parse(csvLine.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                            Double amount = Double.parseDouble(csvLine.getAmount());
+
+                            return new SpendAnalysis(
                             null,
                             null,
-                            csvLine.getDate(),
+                            date,
                             csvLine.getName(),
-                            csvLine.getAmount(),
+                            amount,
                             csvLine.getCurrency(),
-                            null
-                    ))
+                            null);
+                    })
                     .collect(Collectors.toSet());
 
         }

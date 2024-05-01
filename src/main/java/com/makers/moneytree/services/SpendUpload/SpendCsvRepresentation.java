@@ -3,17 +3,15 @@ package com.makers.moneytree.services.SpendUpload;
 
 import com.opencsv.bean.CsvBindByName;
 
-import java.util.Date;
-
 public class SpendCsvRepresentation {
     @CsvBindByName(column = "Date")
-    private Date date;
+    private String date;
 
     @CsvBindByName(column = "Name")
     private String name;
 
     @CsvBindByName(column = "Amount")
-    private Integer amount;
+    private String amount;
 
     @CsvBindByName(column = "Currency")
     private String currency;
@@ -21,18 +19,18 @@ public class SpendCsvRepresentation {
     public SpendCsvRepresentation() {
     }
 
-    public SpendCsvRepresentation(Date date, String name, Integer amount, String currency) {
+    public SpendCsvRepresentation(String date, String name, String amount, String currency) {
         this.date = date;
         this.name = name;
         this.amount = amount;
         this.currency = currency;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -44,11 +42,11 @@ public class SpendCsvRepresentation {
         this.name = name;
     }
 
-    public Integer getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 

@@ -1,18 +1,18 @@
 package com.makers.moneytree.model.SpendAnalysis;
 
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 public class SpendAnalysis {
     String id;
     String userid;
-    Date date;
+    LocalDate date;
     String name;
-    Integer amount;
+    Double amount;
     String currency;
     Map<String, Integer> categories;
 
-    public SpendAnalysis(String id, String userid, Date date, String name, Integer amount, String currency, Map<String, Integer> categories) {
+    public SpendAnalysis(String id, String userid, LocalDate date, String name, Double amount, String currency, Map<String, Integer> categories) {
         this.id = id;
         this.userid = userid;
         this.date = date;
@@ -37,11 +37,11 @@ public class SpendAnalysis {
         this.userid = userid;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -53,11 +53,11 @@ public class SpendAnalysis {
         this.name = name;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
