@@ -25,6 +25,15 @@ This project has been build using Spring Initializer, built using Gradle-Groovy
   `cd src`
   `./gradlew bootRun`
 3. Enusre Mongodb is running:
-  `mongod --dbpath {database name}`    
+  `mongod --dbpath {database name}`
+
+## Frontend
+check out the [frontend](https://github.com/KatieAnthon/The_Money_Tree/tree/main)
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
 
 
