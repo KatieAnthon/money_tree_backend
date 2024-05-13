@@ -22,11 +22,9 @@ This project has been build using Spring Initializer, built using Gradle-Groovy
 
 ## Running the app
 1. Run bootRun:
-`./gradlew bootRun`
-2. Enusre Mongodb is running:
-`mongod --dbpath {database name}`    
+  `cd src`
+  `./gradlew bootRun`
+3. Enusre Mongodb is running:
+  `mongod --dbpath {database name}`    
 
-# Running this server
-`cd src`
-`./gradlew bootRun `
 
