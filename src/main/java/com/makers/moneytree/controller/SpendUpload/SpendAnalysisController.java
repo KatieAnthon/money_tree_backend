@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/spendanalysis")
 public class SpendAnalysisController {
 

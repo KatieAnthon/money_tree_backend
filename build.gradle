@@ -13,7 +13,13 @@ java {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
 }
+
+ext {
+	set('springAiVersion', "1.0.0-M1")
+}
+
 dependencies {
 	// Spring Boot dependencies
 	implementation 'com.microsoft.playwright:playwright:1.28.0'
@@ -21,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'org.springframework.ai:spring-ai-ollama-spring-boot-starter:0.8.0-SNAPSHOT'
 	implementation 'org.apache.commons:commons-configuration2:2.10.1'
 	implementation 'com.opencsv:opencsv:5.7.1'
 	implementation 'org.projectlombok:lombok:1.18.32'
